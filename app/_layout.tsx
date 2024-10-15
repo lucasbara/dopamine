@@ -1,9 +1,34 @@
-import { Stack } from "expo-router";
+import { Tabs } from 'expo-router'
+import "@/global.css";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import React from 'react'
 
-export default function RootLayout() {
+import { TabBarIcon } from '@/components/navigation/TabBarIcon'
+import { Colors } from '@/constants/Colors'
+import { useColorScheme } from '@/hooks/useColorScheme'
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme()
+
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    <GluestackUIProvider mode="light"><Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Sessions',
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon
+                name={focused ? 'water' : 'water-outline'}
+                color={color}
+              />
+            ),
+          }}
+        />
+      </Tabs></GluestackUIProvider>
   );
 }
